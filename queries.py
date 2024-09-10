@@ -379,9 +379,9 @@ def hard_query():
     fcountry.grid(row=3, column=7)
     ftype.grid(row=3, column=8)
 
-    ent = ttk.Button(text="Запрос",  command=lambda: que(fcust, fcost, fsale, fgood, fman, fcountry, ftype)).grid(row=4,column=2, pady=20)
+    ent = ttk.Button(text="Запрос",  command=lambda: que(fcust, fcost, fsale, fgood, fman, fcountry, ftype))
 
-    ent.grid(row=4, pady=40)
+    ent.grid(row=4,column=2, pady=20)
     # fsale.grid(row=3, pady=0)
     # lname.grid(row=2, pady=5)
 
