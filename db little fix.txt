@@ -1,0 +1,138 @@
+-- Удаление существующих таблиц
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS customers;
+DROP TABLE IF EXISTS goods;
+DROP TABLE IF EXISTS manufacturers;
+DROP TABLE IF EXISTS discount;
+DROP TABLE IF EXISTS form_of_wear;
+DROP TABLE IF EXISTS types_of_wear;
+
+-- Таблица "Типы одежды"
+CREATE TABLE types_of_wear(
+    id_type_of_wear serial PRIMARY KEY,
+    type_of_wear varchar(256) UNIQUE
+);
+
+-- Таблица "Виды одежды"
+CREATE TABLE form_of_wear(
+    id_form serial PRIMARY KEY,
+    name_of_form varchar(256) NOT NULL DEFAULT '',
+    form_code int,
+    FOREIGN KEY (form_code) REFERENCES types_of_wear(id_type_of_wear)
+);
+
+-- Таблица "Скидки"
+CREATE TABLE discount(
+    id_disc serial PRIMARY KEY,
+    disc float NOT NULL UNIQUE CHECK (disc < 100)
+);
+
+-- Таблица "Производители"
+CREATE TABLE manufacturers(
+    id_man serial PRIMARY KEY,
+    name_of_man varchar(250) NOT NULL DEFAULT '',
+    country varchar(20) NOT NULL DEFAULT '',
+    date_of_creation int
+);
+
+-- Таблица "Товары"
+CREATE TABLE goods (
+    id_good bigserial NOT NULL PRIMARY KEY,
+    name_of_wear varchar(256) NOT NULL DEFAULT '',
+    cost_of_wear float,
+    country int REFERENCES manufacturers(id_man),
+    form_of_wear int REFERENCES form_of_wear(id_form)
+);
+
+-- Таблица "Покупатели"
+CREATE TABLE customers(
+    id_man serial PRIMARY KEY,
+    name_of_man varchar(256) NOT NULL DEFAULT '',
+    discount int REFERENCES discount(id_disc)
+);
+
+-- Таблица "Заказы"
+CREATE TABLE orders(
+    id_order serial PRIMARY KEY,
+    name_of_good int REFERENCES goods(id_good),
+    name_of_customer int REFERENCES customers(id_man)
+);
+-- Вставка данных в таблицу "Производители"
+INSERT INTO manufacturers (name_of_man, country, date_of_creation) 
+VALUES 
+('Gucci', 'USA', 1953),
+('Zara', 'RUSSIA', 1965),
+('Puma', 'China', 1933),
+('New Rock', 'Spain', 2002),
+('Kappa', 'USA', 1916),
+('Woolstreet', 'RUSSIA', 1996),
+('Helly Hansen', 'Norway', 1877);
+
+-- Вставка данных в таблицу "Скидки"
+INSERT INTO discount (disc) 
+VALUES (5), (10), (32), (35), (67), (88), (1), (2), (55), (12);
+
+-- Вставка данных в таблицу "Типы одежды"
+INSERT INTO types_of_wear (type_of_wear) 
+VALUES 
+('Футболки'), ('Штаны'), ('Инструменты'), ('Обувь'),
+('Аксессуары'), ('Пиджаки и костюмы'), ('Головные уборы');
+
+-- Вставка данных в таблицу "Виды одежды"
+INSERT INTO form_of_wear (name_of_form, form_code) 
+VALUES 
+('Спортивные футболки', 1),
+('Спортивные штаны', 2),
+('Повседневные футболки', 1),
+('Повседневные штаны', 2),
+('Полусапоги', 4),
+('Кроссовки', 4),
+('Сандали', 4),
+('Оружия самозащиты', 3),
+('Ремонт обуви', 3),
+('Ручки', 5),
+('Жакет', 6),
+('Жилет', 6),
+('Пиджак', 6),
+('Модные штаны', 2),
+('Туфли', 4);
+
+-- Вставка данных в таблицу "Покупатели"
+INSERT INTO customers (name_of_man, discount) 
+VALUES 
+('микола', 1), ('алексей анатольевич', 5), ('обэма байденович', 2), 
+('тимур одинцович', 5), ('тимурчик ахахович', 3), ('темурч хахахович', 5), 
+('клопмен смехопадлович', 8), ('апекс твикс', 2), ('жумайсенба челикович', 3), 
+('владимир петрович', 1), ('геннадий крокодилович', 6), ('арсений петрович', 5),
+('виталий юрьевич', 4), ('аркадий разум', 3), ('джон крокодайло', 8), 
+('алексей алексеевич', 7), ('эквидистанта поверхностович', 9), 
+('питон джаваскриптов', 10), ('Нариман Намазов', 6);
+
+-- Вставка данных в таблицу "Товары"
+INSERT INTO goods (name_of_wear, cost_of_wear, country, form_of_wear) 
+VALUES 
+('арматура', 1434, 3, 8), 
+('Штанина обемы', 1232, 1, 4),
+('Футболка з принтом «Подорож»', 1500, 1, 1),
+('Штани з принтом «Подорож»', 1500, 3, 2),
+('Рваные лохмотья', 12000, 1, 14),
+('Малиновый пиджак', 18000, 6, 13),
+('Cherry', 6500, 6, 12),
+('Mist', 8000, 6, 11),
+('Золотая ручка', 50000, 1, 10),
+('Набор для ремонта обуви', 3000, 4, 9),
+('Перцовый баллон', 1600, 4, 8),
+('Стильные сандали', 3500, 1, 7),
+('Puma zxc 1000-7', 19999, 3, 6),
+('Полусапоги обычные', 6999, 5, 5),
+('Малиновые туфли', 32000, 6, 15),
+('Малиновые штаны', 9999, 6, 4),
+('Малиновая футболка', 14000, 6, 3);
+
+-- Вставка данных в таблицу "Заказы"
+INSERT INTO orders (name_of_good, name_of_customer) 
+VALUES 
+(3, 5), (2, 7), (6, 4), (11, 4), (13, 4), (15, 4), (16, 4), (17, 6), 
+(6, 7), (15, 19), (14, 18), (5, 17), (4, 16), (12, 15), (8, 14), (7, 13),
+(13, 12), (16, 11), (15, 10), (5, 9), (5, 8), (5, 7), (8, 6), (1, 5), 
+(12, 4), (1, 1), (1, 2), (1, 3), (3, 4), (2, 4), (1, 8), (4, 8), (4, 2);
