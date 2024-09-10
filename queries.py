@@ -272,7 +272,7 @@ def goods_out():
     for k in types:
         tree.insert(parent='', index=END, text="", values=k)
 
-    tree.grid(row=2, column=0, padx=50, pady=50)
+    tree.grid(row=1, column=0, padx=50, pady=50)
 
     ttk.Button(frm, text="Назад", command=back).grid(column=2, row=0)
 
@@ -304,17 +304,17 @@ def out_orders():
   
     tree = ttk.Treeview(root)
 
-    tree['columns'] = ("ID_ORDER", "CUSTOMER NAME", "COST", "SALE", "GOOD NAME", "MANUFACTURER", "COUNTRY", "FORM", "TYPE")
+    tree['columns'] = ("ID_ORDER", "CUSTOMER NAME", "COST", "SALE", "GOOD NAME", "MANUFACTURER", "COUNTRY", "FORM")
     tree.column("#0", width=0)
     tree.column("ID_ORDER", anchor=W, width=80)
-    tree.column("CUSTOMER NAME", anchor=W, width=160)
+    tree.column("CUSTOMER NAME", anchor=W, width=220)
     tree.column("COST", anchor=W, width=80)
     tree.column("SALE", anchor=W, width=40)
     tree.column("GOOD NAME", anchor=W, width=260)
     tree.column("MANUFACTURER", anchor=W, width=140)
     tree.column("COUNTRY", anchor=W, width=100)
-    tree.column("FORM", anchor=W, width=160)
-    tree.column("TYPE", anchor=W, width=160)
+    tree.column("FORM", anchor=W, width=220)
+    #tree.column("TYPE", anchor=W, width=160)
 
     tree.heading("#0", text="", anchor=W)
     tree.heading("ID_ORDER", text="ID_ORDER", anchor=W)
@@ -325,20 +325,21 @@ def out_orders():
     tree.heading("MANUFACTURER", text="MANUFACTURER", anchor=W)
     tree.heading("COUNTRY", text="COUNTRY", anchor=W)
     tree.heading("FORM", text="FORM", anchor=W)
-    tree.heading("TYPE", text="TYPE", anchor=W)
+    #tree.heading("TYPE", text="TYPE", anchor=W)
 
     for k in types:
         tree.insert(parent='', index=END, text="", values=k)
 
-    tree.grid(row=1, column=0, padx=20, pady=10, columnspan=7)
+    tree.grid(row=1, column=1, pady=20, padx=15,  columnspan=17)
 
-    ttk.Button(text="Назад", command=back).grid(column=0, row=0, pady=20)
+    ttk.Button(text="Назад", command=back).grid(column=2, row=5, padx=40, pady=10)
+
 
     hard_query()
 
 
 def hard_query():
-    fcust = tk.Entry(width=15)
+    fcust = tk.Entry(width=20)
     fcost = tk.Entry()
     fsale = tk.Entry()
     fgood = tk.Entry()
@@ -361,24 +362,24 @@ def hard_query():
     # sales_add(sale)
 
 
-    lcust.grid(row=2, column=0)
-    lcost.grid(row=2, column=1)
-    lsale.grid(row=2, column=2)
-    lgood.grid(row=2, column=3)
-    lman .grid(row=2, column=4)
-    lcountry.grid(row=2, column=5)
-    lftype.grid(row=2, column=6)
+    lcust.grid(row=2, column=2)
+    lcost.grid(row=2, column=3)
+    lsale.grid(row=2, column=4)
+    lgood.grid(row=2, column=5)
+    lman .grid(row=2, column=6)
+    lcountry.grid(row=2, column=7)
+    lftype.grid(row=2, column=8)
 
 
-    fcust.grid(row=3, column=0, pady=5)
-    fcost.grid(row=3, column=1)
-    fsale.grid(row=3, column=2)
-    fgood.grid(row=3, column=3)
-    fman.grid(row=3, column=4)
-    fcountry.grid(row=3, column=5)
-    ftype.grid(row=3, column=6)
+    fcust.grid(row=3, column=2)
+    fcost.grid(row=3, column=3)
+    fsale.grid(row=3, column=4)
+    fgood.grid(row=3, column=5)
+    fman.grid(row=3, column=6)
+    fcountry.grid(row=3, column=7)
+    ftype.grid(row=3, column=8)
 
-    ent = ttk.Button(text="Запрос", command=lambda: que(fcust, fcost, fsale, fgood, fman, fcountry, ftype))
+    ent = ttk.Button(text="Запрос",  command=lambda: que(fcust, fcost, fsale, fgood, fman, fcountry, ftype)).grid(row=4,column=2, pady=20)
 
     ent.grid(row=4, pady=40)
     # fsale.grid(row=3, pady=0)
@@ -508,33 +509,34 @@ def que_out(query, params):
    
     tree = ttk.Treeview(root)
 
-    tree['columns'] = ("ID_ORDER", "CUSTOMER NAME", "COST", "SALE", "GOOD NAME", "MANUFACTURER", "COUNTRY", "TYPE")
+    tree['columns'] = ("ID_ORDER", "CUSTOMER NAME", "COST", "SALE", "GOOD NAME", "MANUFACTURER", "COUNTRY", "FORM")
     tree.column("#0", width=0)
-    tree.column("ID_ORDER", anchor=W, width=160)
-    tree.column("CUSTOMER NAME", anchor=CENTER, width=160)
-    tree.column("COST", anchor=CENTER, width=160)
-    tree.column("SALE", anchor=CENTER, width=160)
-    tree.column("GOOD NAME", anchor=CENTER, width=160)
-    tree.column("MANUFACTURER", anchor=CENTER, width=160)
-    tree.column("COUNTRY", anchor=CENTER, width=160)
-    tree.column("TYPE", anchor=CENTER, width=160)
+    tree.column("ID_ORDER", anchor=W, width=80)
+    tree.column("CUSTOMER NAME", anchor=W, width=220)
+    tree.column("COST", anchor=W, width=80)
+    tree.column("SALE", anchor=W, width=40)
+    tree.column("GOOD NAME", anchor=W, width=260)
+    tree.column("MANUFACTURER", anchor=W, width=140)
+    tree.column("COUNTRY", anchor=W, width=100)
+    tree.column("FORM", anchor=W, width=220)
+    #tree.column("TYPE", anchor=W, width=160)
 
     tree.heading("#0", text="", anchor=W)
     tree.heading("ID_ORDER", text="ID_ORDER", anchor=W)
-    tree.heading("CUSTOMER NAME", text="CUSTOMER NAME", anchor=CENTER)
-    tree.heading("COST", text="COST", anchor=CENTER)
-    tree.heading("SALE", text="SALE", anchor=CENTER)
-    tree.heading("GOOD NAME", text="GOOD NAME", anchor=CENTER)
-    tree.heading("MANUFACTURER", text="MANUFACTURER", anchor=CENTER)
-    tree.heading("COUNTRY", text="COUNTRY", anchor=CENTER)
-    tree.heading("TYPE", text="TYPE", anchor=CENTER)
+    tree.heading("CUSTOMER NAME", text="CUSTOMER NAME", anchor=W)
+    tree.heading("COST", text="COST", anchor=W)
+    tree.heading("SALE", text="SALE", anchor=W)
+    tree.heading("GOOD NAME", text="GOOD NAME", anchor=W)
+    tree.heading("MANUFACTURER", text="MANUFACTURER", anchor=W)
+    tree.heading("COUNTRY", text="COUNTRY", anchor=W)
+    tree.heading("FORM", text="FORM", anchor=W)
 
     for k in types:
         tree.insert(parent='', index=END, text="", values=k)
 
-    tree.grid(row=1, column=0, padx=50, pady=50, columnspan=7)
+    tree.grid(row=1, column=1, pady=20, padx=15,  columnspan=17)
 
-    ttk.Button(text="Назад", command=out_orders).grid(column=0, row=0)
+    ttk.Button(text="Назад", command=back).grid(column=2, row=5, padx=40, pady=10)
 
     hard_query()
 
