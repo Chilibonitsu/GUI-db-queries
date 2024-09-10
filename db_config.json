@@ -1,7 +1,7 @@
 {
     "dbname": "clothing",
     "user": "postgres",
-    "password": "",
-    "host": "",
+    "password": " ",
+    "host": " ",
     "port": "5432"
 }
